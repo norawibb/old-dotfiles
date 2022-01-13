@@ -2,24 +2,25 @@
  * ROFI Color theme
  * User: mbfraga
  * Copyright: Martin B. Fraga
+ * Modified by machaerus (https://gitlab.com/machaerus/dotfiles)
  */
 
 /* global settings and color variables */
-* {
-   maincolor:        #fea63c;
-   highlight:        bold #ffd939;
+* {{
+   maincolor:        {color3};
+   highlight:        bold {color11};
    urgentcolor:      #e53714;
 
-   fgwhite:          #cccccc;
-   blackdarkest:     #222222;
-   blackwidget:      #222222;
-   blackentry:       #222222;
-   blackselect:      #535353;
-   darkgray:         #222222;
+   fgwhite:          {color7};
+   blackdarkest:     {color0};
+   blackwidget:      {color0};
+   blackentry:       {color0};
+   blackselect:      {color8};
+   darkgray:         {color0};
    scrollbarcolor:   #505050;
    font: "JetBrains Mono Regular 12";
    background-color: @blackdarkest;
-}
+}}
 
 window {
    background-color: @blackdarkest;
