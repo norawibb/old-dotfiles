@@ -33,6 +33,52 @@ light = #eee
 gray = #999
 dark-gray = #333
 
+[bar/tray]
+enable-ipc = true
+override-redirect = true
+
+monitor=${env:MONITOR:}
+
+bottom = false
+width = 1%
+height = 30 ;px
+
+offset-y = 28
+offset-x = 98.7%
+
+background = ${colors.dark}
+foreground = ${colors.light}
+
+line-color = ${colors.light-purple}
+line-size = 0
+
+separator = "   "
+
+;List of fonts
+font-0 = ${fonts.opensansreg}
+font-1 = ${fonts.opensanssemibold}
+font-2 = ${fonts.opensansbold}
+font-3 = ${fonts.opensansital}
+font-4 = ${fonts.xos}
+font-5 = ${fonts.nerd}
+font-6 = ${fonts.opensansboldhigh}
+
+wm-restack = none
+tray-position = right
+
+module-margin-left = 0
+module-margin-right = 0
+modules-right = empty
+tray-detached = false
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 4
+tray-maxsize = 20
+tray-scale = 1.0
+tray-background = ${colors.dark-purple}
+
+############################################################################
+
 
 [bar/main]
 enable-ipc = true
@@ -66,8 +112,17 @@ tray-position = none
 
 modules-left = workspaces
 modules-center = date media
-modules-right = xkbstates layout temperature memory memoryswap cpu battery brightness sound wifi powermenu
+modules-right = layout temperature memory memoryswap cpu battery brightness sound wifi powermenu arrow
 
+[module/empty]
+type = custom/script
+exec = echo ""
+
+[module/arrow]
+
+type = custom/script
+exec = echo "  "
+click-left = bash $HOME/.config/polybar/traybar.sh
 
 ;Date correction
 [module/date]
@@ -82,7 +137,7 @@ format-prefix = "    "
 format-padding = 2
 format-underline = ${colors.menucol-orange}
 format-foreground = ${colors.menucol-orange}
-interval = 20
+interval = 1
 
 label = %date%, %time%
 label-font = 2
@@ -174,7 +229,8 @@ click-left = sleep 0.5 && xkill > /dev/null 2>&1 &
 [module/wifi]
 type = internal/network
 interface = enp3s0f1
-format-connected =  <ramp-signal>
+ping-interval = 3
+format-connected = "     <ramp-signal>"
 format-connected-padding = 2
 format-connected-foreground = ${colors.menucol-green}
 format-connected-underline = ${colors.menucol-green}
@@ -182,8 +238,12 @@ format-connected-underline = ${colors.menucol-green}
 format-disconnected = " "
 format-disconnected-font = 7
 format-disconnected-padding = 2
-format-disconnected-foreground = ${colors.menucol-yellow}
-format-disconnected-underline = ${colors.menucol-yellow}
+format-disconnected-foreground = ${colors.menucol-red}
+format-disconnected-underline = ${colors.menucol-red}
+
+format-packetloss = " "
+format-packetloss-foreground = ${colors.menucol-yellow}
+format-packetloss-underline = ${colors.menucol-yellow}
 
 ramp-signal-0 = " "
 ramp-signal-1 = "▂"
@@ -205,7 +265,7 @@ format-volume-underline = ${colors.menucol-sealine}
 label-volume = %percentage%
 label-volume-font = 3
 
-label-muted = "  " (%percentage%)
+label-muted = "    %percentage%"
 label-muted-font = 3
 label-muted-padding = 2
 label-muted-foreground = ${colors.gray}
@@ -223,7 +283,7 @@ ramp-volume-foreground = ${colors.menucol-sealine}
 type = internal/xbacklight
 format = <label>
 format-padding = 2
-format-prefix = 
+format-prefix = "  "
 format-underline = ${colors.menucol-yellow}
 format-prefix-foreground = ${colors.menucol-yellow}
 
@@ -295,6 +355,8 @@ click-left = sh ~/.config/i3/powermenu.sh
 [module/battery]
 type = internal/battery
 battery = BAT1
+adapter = AC
+
 full-at = 100
 
 format-charging = <animation-charging> <label-charging>
