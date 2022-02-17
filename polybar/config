@@ -241,7 +241,7 @@ format-disconnected-padding = 2
 format-disconnected-foreground = ${colors.menucol-red}
 format-disconnected-underline = ${colors.menucol-red}
 
-format-packetloss = " "
+format-packetloss = ""
 format-packetloss-foreground = ${colors.menucol-yellow}
 format-packetloss-underline = ${colors.menucol-yellow}
 
@@ -307,7 +307,7 @@ label-layout = %layout%
 label-layout-font = 2
 label-layout-foreground = ${colors.light}
 
-click-left = sh -layout us -variant colemak
+click-left = exec setxkbmap -layout us -variant colemak
 
 ;Keyboard lock states by xkeyboard
 [module/xkbstates]
@@ -316,6 +316,7 @@ format = <label-indicator>
 
 format-underline = ${colors.menucol-green}
 format-padding = 2
+interval = 0.5
 
 label-indicator-on-capslock = "%{F#77BD8B} "
 label-indicator-off-capslock = "%{F#333} "
