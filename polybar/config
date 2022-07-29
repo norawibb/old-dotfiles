@@ -14,14 +14,14 @@ light-green = #249824
 light-purple = #A44BA0
 
 menucol-yellow = #F7F272
-menucol-blue = #1771F1
-menucol-orange = #FFAF60
-menucol-red = #F85C50
-menucol-green = #77BD8B
+menucol-blue = #2288FF
+menucol-orange = #FF7854
+menucol-red = #FF3320
+menucol-green = #66FF88
 menucol-sealine = #00CF91
-menucol-purple = #9A76B3
-menucol-pink = #FF77BF
-menucol-deepblue = #6560FF
+menucol-purple = #AA55FF
+menucol-pink = #FF47AF
+menucol-deepblue = #4340FF
 menucol-lightblue = #60FFF7
 
 fav-purple = #6633FF
@@ -112,17 +112,20 @@ tray-position = none
 
 modules-left = workspaces
 modules-center = date media
-modules-right = layout temperature memory memoryswap cpu battery brightness sound wifi powermenu arrow
+;modules-right = layout temperature memory memoryswap cpu battery brightness sound wifi vpn powermenu arrow
+modules-right = layout temperature memory memoryswap cpu brightness sound wifi vpn powermenu arrow
+
+[module/arrow]
+type = custom/ipc
+hook-0 = echo "  "
+hook-1 = echo "  "
+initial = 1
+click-left = bash $HOME/.config/polybar/traybar.sh
 
 [module/empty]
 type = custom/script
 exec = echo ""
 
-[module/arrow]
-
-type = custom/script
-exec = echo "  "
-click-left = bash $HOME/.config/polybar/traybar.sh
 
 ;Date correction
 [module/date]
@@ -230,7 +233,46 @@ click-left = sleep 0.5 && xkill > /dev/null 2>&1 &
 type = internal/network
 interface = enp3s0f1
 ping-interval = 3
-format-connected = "     <ramp-signal>"
+format-connected = "   "
+format-connected-padding = 2
+format-connected-foreground = ${colors.menucol-sealine}
+format-connected-underline = ${colors.menucol-sealine}
+
+format-disconnected = " "
+format-disconnected-font = 7
+format-disconnected-padding = 2
+format-disconnected-foreground = ${colors.menucol-red}
+format-disconnected-underline = ${colors.menucol-red}
+
+format-packetloss = ""
+format-packetloss-foreground = ${colors.menucol-yellow}
+format-packetloss-underline = ${colors.menucol-yellow}
+
+ramp-signal-0 = " "
+ramp-signal-1 = "▂"
+ramp-signal-2 = "▄"
+ramp-signal-3 = "▅"
+ramp-signal-4 = "▇"
+ramp-signal-font = 7
+ramp-signal-foreground = ${colors.light}
+
+
+[module/vpn]
+type = custom/script
+exec = $HOME/.config/polybar/pollVPN.sh
+exec-if = pgrep expressvpn
+interval = 3
+format-underline = ${colors.menucol-green}
+format-prefix-foreground = ${colors.menucol-green}
+label = %{T3}%output%
+label-font = 8
+click-left = $HOME/.config/polybar/toggleVPN.sh
+
+[module/nordlynx]
+type = internal/network
+interface = nordlynx
+ping-interval = 3
+format-connected = "  "
 format-connected-padding = 2
 format-connected-foreground = ${colors.menucol-green}
 format-connected-underline = ${colors.menucol-green}
@@ -260,7 +302,7 @@ type = internal/pulseaudio
 
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 2
-format-volume-underline = ${colors.menucol-sealine}
+format-volume-underline = ${colors.menucol-orange}
 
 label-volume = %percentage%
 label-volume-font = 3
@@ -275,7 +317,7 @@ ramp-volume-0 = "  "
 ramp-volume-1 = "  "
 ramp-volume-2 = "  "
 ramp-volume-font = 7
-ramp-volume-foreground = ${colors.menucol-sealine}
+ramp-volume-foreground = ${colors.menucol-orange}
 
 
 ;Brightness
